@@ -31,12 +31,11 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 
 ## Notes & Limitations
 
-- At this time, when using the attached core tools, only the new programming model will be supported
+- At this time, when using the attached core tools, only the new programming model will be supported.
 - HTTP annotation is taken as an argument
-- By default, the authentication level is set to Functions.
-- The name of the function script file must be 'function_app.py'. In the case that this file is not found, the worker will fall back to the legacy indexing.
+- The name of the function script file must be 'function_app.py'. In the case that this file is not found, the worker will fall back to legacy indexing which is not supported when using this version of core tools.
 - Mix and match of the legacy and new programming model is not supported
-- If the function app is configured with Flask framework, the HTTP bindings will not work as expected.
+- If the function app is configured with Flask framework, the HTTP bindings will not work as expected. Other configured HTTP triggers also will not work, note that this is a behavior present today as well.
 - At this time, all testing will be local as the new programming model is not available in production.
 
 View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
