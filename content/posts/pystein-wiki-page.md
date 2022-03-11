@@ -4,6 +4,9 @@ date: 2022-03-10T22:58:54-08:00
 draft: false
 ---
 
+## Specification
+Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi)
+
 ## Our Goals
 The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
 
