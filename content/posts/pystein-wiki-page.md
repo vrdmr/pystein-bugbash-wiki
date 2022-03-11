@@ -21,9 +21,9 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 - Download PyStein Custom Core Tools .
 - Unzip the folder to extract the files.
 - Option 1: Referencing the func in this folder when running `func host start`.
-  - `C:\Users\test_user\functionscli\CoreTools-PyStein host start`
+  - `C:\Users\test_user\functionscli\CoreTools-PyStein\func host start`
 - Option 2: Alias the func to this folder. Note that this will impact your existing core tools if you don't reset it when you are done testing.
-  - `Set-Alias -Name func -Value C:\Users\test_user\functionscli\CoreTools-PyStein`
+  - `Set-Alias -Name func -Value C:\Users\test_user\functionscli\CoreTools-PyStein\func`
 
 ## Notes & Limitations
 - At this time, when using the attached core tools, only the new programming model will be supported
