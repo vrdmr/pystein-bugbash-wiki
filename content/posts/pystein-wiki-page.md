@@ -5,20 +5,24 @@ draft: false
 ---
 
 ## Specification
-Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi)
+
+Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi).
 
 ## Our Goals
+
 The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
 
 To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (`funcion_app.py`) and will no longer require the `function.json` file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
 
 ## Getting Started
+
 Currently, the Python programming model is in the alpha release.
 
 To try out the new programming model, download PyStein Custom Core Tools . Note that downloading the file will not overwrite the existing core tools in your device.
 
 ## Installation & Setup
-- Download PyStein Custom Core Tools .
+
+- Download PyStein Custom Core Tools [(for Windows)](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein.zip).
 - Unzip the folder to extract the files.
 - Option 1: Referencing the func in this folder when running `func host start`.
   - `C:\Users\test_user\functionscli\CoreTools-PyStein\func host start`
@@ -26,6 +30,7 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
   - `Set-Alias -Name func -Value C:\Users\test_user\functionscli\CoreTools-PyStein\func`
 
 ## Notes & Limitations
+
 - At this time, when using the attached core tools, only the new programming model will be supported
 - HTTP annotation is taken as an argument
 - By default, the authentication level is set to Functions.
@@ -37,9 +42,11 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 View examples for the new programming model.
 
 ## Triggers & Bindings
+
 At this time, the new Programming model supports HTTP, Timer, Event Hub, Queue, Service Bus, and Cosmos DB. The following are examples of the implementation with the new programming model.
 
 ### Event Hub
+
 ```python
 @app.function_name(name="EventHubFunc")
 @app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString")
@@ -49,6 +56,7 @@ def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
 ```
 
 ### Queue
+
 ```python
 @app.function_name(name="QueueFunc")
 @app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString")
@@ -60,6 +68,7 @@ def test_function(msg: func.QueueMessage, outputQueueItem: func.Out[str]) -> Non
 ```    
 
 ### Service Bus
+
 ```python
 @app.function_name(name="ServiceBusFunc")
 @app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicconnection", subscription_name="testsub")
@@ -111,6 +120,7 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 ```
 
 ### Cosmos DB
+
 ```python
 @app.function_name(name="Cosmos1")
 @app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString", lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true")
@@ -125,8 +135,9 @@ def main(triggerDocs: func.DocumentList, inDocs: func.DocumentList, outDoc: func
 ```
 
 ## What's Next
-View examples for the new programming model.
-Let us know your feedback in the GitHub discussion .
+
+View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
+Let us know your feedback in the [GitHub discussion](https://github.com/Azure/azure-functions-python-worker/discussions/959).
 
 ## Upcoming Features
 
