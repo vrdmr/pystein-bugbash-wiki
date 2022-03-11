@@ -43,7 +43,7 @@ Event Hub
 @app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString")
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
     outputhub.set("hello")
-```python
+```
 
 Queue
 
@@ -82,7 +82,7 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 
     logging.info(result)
     serbustopicbinding.set("topic works!!")
-```python
+```
 
 ```python
 @app.function_name(name="ServiceBusFunc")
@@ -121,7 +121,7 @@ def main(triggerDocs: func.DocumentList, inDocs: func.DocumentList, outDoc: func
         logging.info(inDocs[0]['text'])
         triggerDoc['ssss'] = 'Hello updated2!'
         outDoc.set(triggerDoc)
-```python
+```
 
 What's Next
 View examples for the new programming model.
