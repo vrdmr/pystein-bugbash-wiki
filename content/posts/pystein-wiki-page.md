@@ -39,7 +39,7 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 - If the function app is configured with Flask framework, the HTTP bindings will not work as expected.
 - At this time, all testing will be local as the new programming model is not available in production.
 
-View examples for the new programming model.
+View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
 
 ## Triggers & Bindings
 
