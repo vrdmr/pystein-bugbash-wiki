@@ -7,7 +7,7 @@ draft: false
 ## Our Goals
 The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
 
-To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (funcion_app.py) and will no longer require the 'function.json' file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
+To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (`funcion_app.py`) and will no longer require the `function.json` file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
 
 ## Getting Started
 Currently, the Python programming model is in the alpha release.
