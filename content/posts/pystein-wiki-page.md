@@ -1,5 +1,5 @@
 ---
-title: "Pystein Wiki Page"
+title: "(Preview) Python Programming Model Wiki"
 date: 2022-03-10T22:58:54-08:00
 draft: false
 ---
@@ -37,14 +37,17 @@ Triggers & Bindings
 At this time, the new Programming model supports HTTP, Timer, Event Hub, Queue, Service Bus, and Cosmos DB. The following are examples of the implementation with the new programming model.
 
 Event Hub
-
+```python
 @app.function_name(name="EventHubFunc")
 @app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString")
 @app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString")
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
     outputhub.set("hello")
+```python
+
 Queue
 
+```python
 @app.function_name(name="QueueFunc")
 @app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString")
 @app.write_queue(arg_name="outputQueueItem", queue_name="outqueue", connection="storageAccountConnectionString")
@@ -52,8 +55,11 @@ def test_function(msg: func.QueueMessage, outputQueueItem: func.Out[str]) -> Non
     logging.info('Python queue trigger function processed a queue item: %s',
                  msg.get_body().decode('utf-8'))
     outputQueueItem.set('hello')
+```    
+
 Service Bus
 
+```python
 @app.function_name(name="ServiceBusFunc")
 @app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicconnection", subscription_name="testsub")
 @app.write_service_bus_topic(arg_name="serbustopicbinding", connection="topicconnection",  topic_name="testtopic", subscription_name="testsub")
@@ -76,6 +82,7 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 
     logging.info(result)
     serbustopicbinding.set("topic works!!")
+```python
 
 ```python
 @app.function_name(name="ServiceBusFunc")
@@ -103,7 +110,7 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 ```
 
 Cosmos DB
-
+```python
 @app.function_name(name="Cosmos1")
 @app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString", lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true")
 @app.write_cosmos_db_documents(arg_name="outDoc", database_name="billdb", collection_name="outColl", connection_string_setting="CosmosDBConnectionString")
@@ -114,6 +121,8 @@ def main(triggerDocs: func.DocumentList, inDocs: func.DocumentList, outDoc: func
         logging.info(inDocs[0]['text'])
         triggerDoc['ssss'] = 'Hello updated2!'
         outDoc.set(triggerDoc)
+```python
+
 What's Next
 View examples for the new programming model.
 Let us know your feedback in the GitHub discussion .
