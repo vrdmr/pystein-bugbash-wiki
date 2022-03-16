@@ -16,7 +16,10 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 
 ## Installation & Setup
 
-- Download PyStein Custom Core Tools [(Windows)](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-win.zip) [(Linux)](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip).
+- Download PyStein Custom Core Tools 
+  - [Windows](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-win.zip)
+  - [Linux](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip)
+  - [macOS](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-osx.zip)
 - Unzip the folder to extract the files.
 - Run `func` from the unzipped path directly
   - `<path_to_core_tools>/func host start`
