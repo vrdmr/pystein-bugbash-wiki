@@ -8,16 +8,6 @@ draft: false
 
 [Scenario Excel Sheet](https://microsoft-my.sharepoint.com/:x:/p/shbatr/EZR02oGmw-9AjI8AALS3Ye0B0_cBJ8b5AzDEJBhHjAe5jw?e=zuFPet)
 
-## Specification
-
-Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi).
-
-## Our Goals
-
-The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
-
-To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (`function_app.py`) and will no longer require the `function.json` file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
-
 ## Getting Started
 
 Currently, the Python programming model is in the alpha release.
@@ -28,9 +18,15 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 
 - Download PyStein Custom Core Tools [(Windows)](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-win.zip) [(Linux)](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip).
 - Unzip the folder to extract the files.
+- Run `func` from the unzipped path directly
+  - `<path_to_core_tools>/func host start`
+- For reference, view [examples for the new programming model](https://github.com/gavin-aguiar/python-functions-new-prg-model).
+- Let us know your feedback in the [GitHub discussion](https://github.com/Azure/azure-functions-python-worker/discussions/959).
+
+E.g. For Windows:
 - Option 1: Referencing the func in this folder when running `func host start`.
   - `C:\Users\test_user\functionscli\CoreTools-PyStein\func host start`
-- Option 2: Alias the func to this folder. Note that this will impact your existing core tools if you don't reset it when you are done testing.
+- Option 2: Alias (using `Set-Alias` in Powershell) the func to this folder. Note that this will impact your existing core tools if you don't reset it when you are done testing.
   - `Set-Alias -Name func -Value C:\Users\test_user\functionscli\CoreTools-PyStein\func`
 
 ## Notes & Limitations
@@ -44,14 +40,46 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 
 View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
 
+## Specification
+
+Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi).
+
+## Our Goals
+
+The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
+
+To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (`function_app.py`) and will no longer require the `function.json` file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
+
 ## Triggers & Bindings
 
 At this time, the new Programming model supports HTTP, Timer, Event Hub, Queue, Service Bus, and Cosmos DB. The following are examples of the implementation with the new programming model.
 
+### HTTP
+
+```python
+import azure.functions as func
+
+app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.function_name(name="HttpTrigger1")
+@app.route(route="hello") # HTTP Trigger
+def test_function(req: func.HttpRequest) -> func.HttpResponse:
+     return func.HttpResponse("HttpTrigger1 function processed a request!!!")
+
+
+@app.function_name(name="HttpTrigger2")
+@app.route(route="hello2") # HTTP Trigger
+def test_function2(req: func.HttpRequest) -> func.HttpResponse:
+     return func.HttpResponse("HttpTrigger2 function processed a request!!!")
+```
+
 ### Event Hub
 
 ```python
-@app.function_name(name="EventHubFunc")
+import azure.functions as func
+
+app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)@app.function_name(name="EventHubFunc")
+
 @app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString")
 @app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString")
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
@@ -61,6 +89,10 @@ def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
 ### Queue
 
 ```python
+import azure.functions as func
+
+app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)
+
 @app.function_name(name="QueueFunc")
 @app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString")
 @app.write_queue(arg_name="outputQueueItem", queue_name="outqueue", connection="storageAccountConnectionString")
