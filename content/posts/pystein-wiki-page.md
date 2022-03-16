@@ -21,7 +21,7 @@ To try out the new programming model, download PyStein Custom Core Tools. Note t
   - [Linux](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip)
   - [macOS](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-osx.zip)
 - Unzip the folder to extract the files.
-- Clone the starter repository to get started.
+- Clone the starter repository to get started at [starter repo](https://github.com/YunchuWang/python-functions-new-prg-model-starter)
   - Note, in `local.settings.json`, the flag for `AzureWebJobsFeatureFlags` is set to `EnableWorkerIndexing`.
 - Run `func` from the unzipped path directly
   - `<path_to_core_tools>/func host start`
