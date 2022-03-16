@@ -12,7 +12,7 @@ draft: false
 
 Currently, the Python programming model is in the alpha release.
 
-To try out the new programming model, download PyStein Custom Core Tools . Note that downloading the file will not overwrite the existing core tools in your device.
+To try out the new programming model, download PyStein Custom Core Tools. Note that downloading the file will not overwrite the existing core tools in your device.
 
 ## Installation & Setup
 
@@ -21,17 +21,19 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
   - [Linux](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip)
   - [macOS](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-osx.zip)
 - Unzip the folder to extract the files.
+- Clone the starter repository to get started.
+  - Note, in `local.settings.json`, the flag for `AzureWebJobsFeatureFlags` is set to `EnableWorkerIndexing`.
 - Run `func` from the unzipped path directly
   - `<path_to_core_tools>/func host start`
-- For reference, view [examples for the new programming model](https://github.com/gavin-aguiar/python-functions-new-prg-model).
   - Please update the storage account connection string in the `local.settings.json`.
+- For reference, view [examples for the new programming model](https://github.com/gavin-aguiar/python-functions-new-prg-model).
 - Let us know your feedback in the [GitHub discussion](https://github.com/Azure/azure-functions-python-worker/discussions/959).
 
 E.g. For Windows:
 - Option 1: Referencing the func in this folder when running `func host start`.
-  - `C:\Users\test_user\functionscli\CoreTools-PyStein\func host start`
+  - `C:\Users\test_user\Downloads\CoreTools-PyStein-win\CoreTools-New-Prg-Model\func`
 - Option 2: Alias (using `Set-Alias` in Powershell) the func to this folder. Note that this will impact your existing core tools if you don't reset it when you are done testing.
-  - `Set-Alias -Name func -Value C:\Users\test_user\functionscli\CoreTools-PyStein\func`
+  - `Set-Alias -Name func -Value C:\Users\test_user\Downloads\CoreTools-PyStein-win\CoreTools-New-Prg-Model\func`
 
 ## Notes & Limitations
 
