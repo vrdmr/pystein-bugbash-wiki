@@ -79,8 +79,9 @@ def test_function2(req: func.HttpRequest) -> func.HttpResponse:
 ```python
 import azure.functions as func
 
-app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)@app.function_name(name="EventHubFunc")
+app = func.FunctionApp()
 
+@app.function_name(name="EventHubFunc")
 @app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString")
 @app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString")
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
@@ -92,7 +93,7 @@ def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
 ```python
 import azure.functions as func
 
-app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)
+app = func.FunctionApp()
 
 @app.function_name(name="QueueFunc")
 @app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString")
@@ -106,6 +107,10 @@ def test_function(msg: func.QueueMessage, outputQueueItem: func.Out[str]) -> Non
 ### Service Bus
 
 ```python
+import azure.functions as func
+
+app = func.FunctionApp()
+
 @app.function_name(name="ServiceBusFunc")
 @app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicconnection", subscription_name="testsub")
 @app.write_service_bus_topic(arg_name="serbustopicbinding", connection="topicconnection",  topic_name="testtopic", subscription_name="testsub")
@@ -131,6 +136,10 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 ```
 
 ```python
+import azure.functions as func
+
+app = func.FunctionApp()
+
 @app.function_name(name="ServiceBusFunc")
 @app.on_service_bus_queue_change(arg_name="serbustopictrigger", queue_name="inputqueue", connection="sbconnection")
 @app.write_service_bus_queue(arg_name="serbustopicbinding", connection="sbconnection",  queue_name="outputqueue")
@@ -158,6 +167,10 @@ def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Ou
 ### Cosmos DB
 
 ```python
+import azure.functions as func
+
+app = func.FunctionApp()
+
 @app.function_name(name="Cosmos1")
 @app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString", lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true")
 @app.write_cosmos_db_documents(arg_name="outDoc", database_name="billdb", collection_name="outColl", connection_string_setting="CosmosDBConnectionString")
@@ -173,6 +186,10 @@ def main(triggerDocs: func.DocumentList, inDocs: func.DocumentList, outDoc: func
 ### Storage Blobs
 
 ```python
+import azure.functions as func
+
+app = func.FunctionApp()
+
 @app.function_name(name="BlobFunc")
 @app.on_blob_change(arg_name="triggerBlob", path="input-container/{name}", connection="AzureWebJobsStorage")
 @app.write_blob(arg_name="outputBlob", path="output-container/{name}", connection="AzureWebJobsStorage")
