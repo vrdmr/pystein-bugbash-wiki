@@ -44,7 +44,7 @@ E.g. For Windows:
 - If the function app is configured with Flask framework, the HTTP bindings will not work as expected. Other configured HTTP triggers also will not work, note that this is a behavior present today as well.
 - At this time, all testing will be local as the new programming model is not available in production.
 
-View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
+View [http-only-example](https://github.com/gavin-aguiar/python-functions-new-prg-model-http),  [examples-non-http](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
 
 ## Specification
 
@@ -209,7 +209,7 @@ def test_function(triggerBlob: func.InputStream , readBlob : func.InputStream, o
 
 ## What's Next
 
-View [examples](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
+View  [http-only-example](https://github.com/gavin-aguiar/python-functions-new-prg-model-http),  [examples-non-http](https://github.com/gavin-aguiar/python-functions-new-prg-model) for the new programming model.
 Let us know your feedback in the [GitHub discussion](https://github.com/Azure/azure-functions-python-worker/discussions/959).
 
 ## Upcoming Features
