@@ -21,6 +21,7 @@ To try out the new programming model, download PyStein Custom Core Tools . Note 
 - Run `func` from the unzipped path directly
   - `<path_to_core_tools>/func host start`
 - For reference, view [examples for the new programming model](https://github.com/gavin-aguiar/python-functions-new-prg-model).
+  - Please update the storage account connection string in the `local.settings.json`.
 - Let us know your feedback in the [GitHub discussion](https://github.com/Azure/azure-functions-python-worker/discussions/959).
 
 E.g. For Windows:
