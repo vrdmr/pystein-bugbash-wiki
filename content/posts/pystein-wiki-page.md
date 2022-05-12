@@ -16,6 +16,8 @@ To try out the new programming model, download PyStein Custom Core Tools. Note t
 
 ## Installation & Setup
 
+Note: The custom Core Tools downloads will become available once again on May 23, 2022.
+
 - Download PyStein Custom Core Tools 
   - [Windows](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-win.zip)
   - [Linux](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip)
