@@ -1,18 +1,14 @@
 ---
-title: "(Preview) PyStein: Python Programming Model Wiki"
-date: 2022-03-10T22:58:54-08:00
+title: "(Private Preview) PyStein: New Python Programming Model"
+date: 2022-06-07T22:58:54-08:00
 draft: false
 ---
-
-# Sign up here for a Scenario 
-
-[Scenario Excel Sheet](https://microsoft-my.sharepoint.com/:x:/p/shbatr/EZR02oGmw-9AjI8AALS3Ye0B0_cBJ8b5AzDEJBhHjAe5jw?e=zuFPet)
 
 ## Getting Started
 
 Currently, the Python programming model is in the alpha release.
 
-To try out the new programming model, download PyStein Custom Core Tools. Note that downloading the file will not overwrite the existing core tools in your device.
+To try out the new programming model, download PyStein Custom Core Tools and follow the instructions below. Note that downloading the file will not overwrite the existing core tools in your device.
 
 ## Installation & Setup
 
@@ -52,11 +48,17 @@ View [http-only-example](https://github.com/gavin-aguiar/python-functions-new-pr
 
 Reference specification of the decorator is available at [ProgModelSpec.pyi at Azure library repo](https://github.com/Azure/azure-functions-python-library/blob/dev/docs/ProgModelSpec.pyi).
 
+The reference documentation including design is available in this [document](https://microsoft-my.sharepoint.com/:w:/p/vameru/EXcVUDxPjn9Pu-1WWCHppbcBW_QrppTx7jjf0Zuy1zTZOg?e=3Ql5LN).
+
 ## Our Goals
 
 The current Python programming model in Azure Functions has limitations that sometimes prevents a customer from having a smooth onboarding experience. This includes the facts that there are too many files present, that the Function App structure can be confusing, and that file configuration follows Azure specific concepts rather than what Python frameworks.
 
 To overcome these challenges, the Azure Functions Python team ideated a new programming model which eases the learning experience for new and existing customers. Specifically, the new programming model involves a single .py file (`function_app.py`) and will no longer require the `function.json` file. Furthermore, the triggers and bindings usage will be decorators, simulating an experience similar to Flask.
+
+# Help us Test
+
+Interesting in helping us test the new programming model? Sign up for a scenario [here](https://microsoft-my.sharepoint.com/:x:/p/shbatr/EZR02oGmw-9AjI8AALS3Ye0B0_cBJ8b5AzDEJBhHjAe5jw?e=zuFPet)
 
 ## Triggers & Bindings
 
@@ -80,6 +82,19 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
 def test_function2(req: func.HttpRequest) -> func.HttpResponse:
      return func.HttpResponse("HttpTrigger2 function processed a request!!!")
 ```
+### Timer
+```python
+@app.function_name(name="timertest")
+@app.schedule(schedule="*/10 * * * * *", arg_name="dummy", run_on_startup=False,use_monitor=False) # Timer Trigger
+def timer_function(dummy: func.TimerRequest) -> None:
+    utc_timestamp = datetime.datetime.utcnow().replace(
+        tzinfo=datetime.timezone.utc).isoformat()
+
+    if dummy.past_due:
+        logging.info('The timer is past due!')
+
+    logging.info('Python timer trigger function ran at %s', utc_timestamp)
+```
 
 ### Event Hub
 
@@ -89,8 +104,8 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="EventHubFunc")
-@app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString")
-@app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString")
+@app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString") # Eventhub trigger
+@app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString") # Eventhub output binding
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
     outputhub.set("hello")
 ```
@@ -103,8 +118,8 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="QueueFunc")
-@app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString")
-@app.write_queue(arg_name="outputQueueItem", queue_name="outqueue", connection="storageAccountConnectionString")
+@app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString") # Queue trigger
+@app.write_queue(arg_name="outputQueueItem", queue_name="outqueue", connection="storageAccountConnectionString") # Queue output binding
 def test_function(msg: func.QueueMessage, outputQueueItem: func.Out[str]) -> None:
     logging.info('Python queue trigger function processed a queue item: %s',
                  msg.get_body().decode('utf-8'))
@@ -118,9 +133,9 @@ import azure.functions as func
 
 app = func.FunctionApp()
 
-@app.function_name(name="ServiceBusFunc")
-@app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicconnection", subscription_name="testsub")
-@app.write_service_bus_topic(arg_name="serbustopicbinding", connection="topicconnection",  topic_name="testtopic", subscription_name="testsub")
+@app.function_name(name="ServiceBusTopicFunc")
+@app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicConnectionString", subscription_name="testsub") # service bus topic trigger
+@app.write_service_bus_topic(arg_name="serbustopicbinding", connection="outputtopicConnectionString",  topic_name="outputtopic", subscription_name="testsub") # service bus topic output binding 
 def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Out[str]) -> None:
     logging.info('Python ServiceBus queue trigger processed message.')
 
@@ -147,9 +162,9 @@ import azure.functions as func
 
 app = func.FunctionApp()
 
-@app.function_name(name="ServiceBusFunc")
-@app.on_service_bus_queue_change(arg_name="serbustopictrigger", queue_name="inputqueue", connection="sbconnection")
-@app.write_service_bus_queue(arg_name="serbustopicbinding", connection="sbconnection",  queue_name="outputqueue")
+@app.function_name(name="ServiceBusQueueFunc")
+@app.on_service_bus_queue_change(arg_name="serbustopictrigger", queue_name="inputqueue", connection="queueConnectionString") # service bus queue trigger
+@app.write_service_bus_queue(arg_name="serbustopicbinding", connection="queueConnectionString",  queue_name="outputqueue")  # service bus queue output binding 
 def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Out[str]) -> None:
     logging.info('Python ServiceBus queue trigger processed message.')
 
@@ -179,9 +194,10 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="Cosmos1")
-@app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString", lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true")
-@app.write_cosmos_db_documents(arg_name="outDoc", database_name="billdb", collection_name="outColl", connection_string_setting="CosmosDBConnectionString")
-@app.read_cosmos_db_documents(arg_name="inDocs", database_name="billdb", collection_name="incoll", connection_string_setting="CosmosDBConnectionString")
+@app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString",
+ lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true") # Cosmos DB Trigger
+@app.write_cosmos_db_documents(arg_name="outDoc", database_name="billdb", collection_name="outColl", connection_string_setting="CosmosDBConnectionString") # Cosmos DB input binding
+@app.read_cosmos_db_documents(arg_name="inDocs", database_name="billdb", collection_name="incoll", connection_string_setting="CosmosDBConnectionString") # Cosmos DB output binding
 def main(triggerDocs: func.DocumentList, inDocs: func.DocumentList, outDoc: func.Out[func.Document]) -> str:
     if triggerDocs:
         triggerDoc = triggerDocs[0]
