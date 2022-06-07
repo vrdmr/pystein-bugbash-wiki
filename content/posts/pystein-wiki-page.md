@@ -12,13 +12,12 @@ To try out the new programming model, download PyStein Custom Core Tools and fol
 
 ## Installation & Setup
 
-Note: The custom Core Tools downloads will become available once again on June 7, 2022.
-
 - Download PyStein Custom Core Tools 
-  - [Windows](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-win.zip)
-  - [Linux](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-linux.zip)
-  - [macOS](https://pysteinresources.blob.core.windows.net/coretools-pystein/CoreTools-PyStein-osx.zip)
+  - [Windows](https://functionsintegclibuilds.blob.core.windows.net/builds/4/latest/Azure.Functions.Cli.win-x64.zip)
+  - [Linux](https://functionsintegclibuilds.blob.core.windows.net/builds/4/latest/Azure.Functions.Cli.linux-x64.zip)
+  - [macOS](https://functionsintegclibuilds.blob.core.windows.net/builds/4/latest/Azure.Functions.Cli.osx-x64.zip)
 - Unzip the folder to extract the files.
+- If you are using a Mac, and get a notification that '<file name> cannot be opened because teh developer cannnot be verified', go to Settings and click 'Allow <file name>' to proceed.
 - Clone the [starter repository](https://github.com/YunchuWang/python-functions-new-prg-model-starter) to set up the function app.
   - Note, in `local.settings.json`, the flag for `AzureWebJobsFeatureFlags` is set to `EnableWorkerIndexing`.
 - Run `func` from the unzipped path directly
