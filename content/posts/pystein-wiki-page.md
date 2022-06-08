@@ -223,6 +223,29 @@ def test_function(triggerBlob: func.InputStream , readBlob : func.InputStream, o
     outputBlob.set('hello')
     logging.info(f"Output blob: {readBlob.read()}")
 ```
+  
+### Event Grid
+```python
+  
+@app.function_name(name="eventGridTrigger")
+@app.event_grid_trigger(arg_name="eventGridEvent")
+@app.write_event_grid(
+    arg_name="outputEvent",
+    topic_endpoint_uri="MyEventGridTopicUriSetting",
+    topic_key_setting="MyEventGridTopicKeySetting")
+def main(eventGridEvent: func.EventGridEvent,
+         outputEvent: func.Out[func.EventGridOutputEvent]) -> None:
+    logging.info("eventGridEvent: ", eventGridEvent)
+
+    outputEvent.set(
+        func.EventGridOutputEvent(
+            id="test-id",
+            data={"tag1": "value1", "tag2": "value2"},
+            subject="test-subject",
+            event_type="test-event-1",
+            event_time=datetime.datetime.utcnow(),
+            data_version="1.0"))
+```
 
 ## What's Next
 
