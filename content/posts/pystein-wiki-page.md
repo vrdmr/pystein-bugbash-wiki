@@ -226,6 +226,9 @@ def test_function(triggerBlob: func.InputStream , readBlob : func.InputStream, o
   
 ### Event Grid
 ```python
+import azure.functions as func
+
+app = func.FunctionApp()
   
 @app.function_name(name="eventGridTrigger")
 @app.event_grid_trigger(arg_name="eventGridEvent")
