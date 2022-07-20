@@ -1,6 +1,6 @@
 ---
 title: "(Private Preview) PyStein: New Python Programming Model"
-date: 2022-06-06T22:58:54-08:00
+date: 2022-07-19T22:58:54-08:00
 draft: false
 ---
 
@@ -103,7 +103,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="EventHubFunc")
-@app.on_event_hub_message(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString") # Eventhub trigger
+@app.event_hub_message_trigger(arg_name="myhub", event_hub_name="testhub", connection="EHConnectionString") # Eventhub trigger
 @app.write_event_hub_message(arg_name="outputhub", event_hub_name="testhub", connection="EHConnectionString") # Eventhub output binding
 def eventhub_trigger(myhub: func.EventHubEvent, outputhub: func.Out[str]):
     outputhub.set("hello")
@@ -117,7 +117,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="QueueFunc")
-@app.on_queue_change(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString") # Queue trigger
+@app.queue_trigger(arg_name="msg", queue_name="js-queue-items", connection="storageAccountConnectionString") # Queue trigger
 @app.write_queue(arg_name="outputQueueItem", queue_name="outqueue", connection="storageAccountConnectionString") # Queue output binding
 def test_function(msg: func.QueueMessage, outputQueueItem: func.Out[str]) -> None:
     logging.info('Python queue trigger function processed a queue item: %s',
@@ -133,7 +133,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="ServiceBusTopicFunc")
-@app.on_service_bus_topic_change(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicConnectionString", subscription_name="testsub") # service bus topic trigger
+@app.service_bus_topic_trigger(arg_name="serbustopictrigger", topic_name="testtopic", connection="topicConnectionString", subscription_name="testsub") # service bus topic trigger
 @app.write_service_bus_topic(arg_name="serbustopicbinding", connection="outputtopicConnectionString",  topic_name="outputtopic", subscription_name="testsub") # service bus topic output binding 
 def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Out[str]) -> None:
     logging.info('Python ServiceBus queue trigger processed message.')
@@ -162,7 +162,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="ServiceBusQueueFunc")
-@app.on_service_bus_queue_change(arg_name="serbustopictrigger", queue_name="inputqueue", connection="queueConnectionString") # service bus queue trigger
+@app.service_bus_queue_trigger(arg_name="serbustopictrigger", queue_name="inputqueue", connection="queueConnectionString") # service bus queue trigger
 @app.write_service_bus_queue(arg_name="serbustopicbinding", connection="queueConnectionString",  queue_name="outputqueue")  # service bus queue output binding 
 def main(serbustopictrigger: func.ServiceBusMessage, serbustopicbinding: func.Out[str]) -> None:
     logging.info('Python ServiceBus queue trigger processed message.')
@@ -193,7 +193,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="Cosmos1")
-@app.on_cosmos_db_update(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString",
+@app.cosmos_db_trigger(arg_name="triggerDocs", database_name="billdb", collection_name="billcollection", connection_string_setting="CosmosDBConnectionString",
  lease_collection_name="leasesstuff", create_lease_collection_if_not_exists="true") # Cosmos DB Trigger
 @app.write_cosmos_db_documents(arg_name="outDoc", database_name="billdb", collection_name="outColl", connection_string_setting="CosmosDBConnectionString") # Cosmos DB input binding
 @app.read_cosmos_db_documents(arg_name="inDocs", database_name="billdb", collection_name="incoll", connection_string_setting="CosmosDBConnectionString") # Cosmos DB output binding
@@ -213,7 +213,7 @@ import azure.functions as func
 app = func.FunctionApp()
 
 @app.function_name(name="BlobFunc")
-@app.on_blob_change(arg_name="triggerBlob", path="input-container/{name}", connection="AzureWebJobsStorage")
+@app.blob_trigger(arg_name="triggerBlob", path="input-container/{name}", connection="AzureWebJobsStorage")
 @app.write_blob(arg_name="outputBlob", path="output-container/{name}", connection="AzureWebJobsStorage")
 @app.read_blob(arg_name="readBlob", path="output-container/{name}", connection="AzureWebJobsStorage")
 def test_function(triggerBlob: func.InputStream , readBlob : func.InputStream, outputBlob: func.Out[str]) -> None:
